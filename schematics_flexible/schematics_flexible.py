@@ -17,7 +17,7 @@ class Flexible(Model):
     code = StringType(max_length=10)
     properties = StringType()
 
-    def __init__(self, *args, schema_source, **kwargs):
+    def __init__(self, schema_source, *args, **kwargs):
         """ Save schema source """
         super(Flexible, self).__init__(*args, **kwargs)
         self._schema_source = schema_source
