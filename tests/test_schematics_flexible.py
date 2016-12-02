@@ -15,7 +15,6 @@ import unittest
 from schematics_flexible import schematics_flexible
 
 
-
 class TestSchematics_flexible(unittest.TestCase):
 
     def setUp(self):
