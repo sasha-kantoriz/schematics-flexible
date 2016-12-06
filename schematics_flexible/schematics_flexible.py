@@ -1,40 +1,45 @@
 # -*- coding: utf-8 -*-
+import json
 
 from schematics.types import StringType
 from schematics.models import Model
-from jsonschema import Draft4Validator
 from jsonschema.exceptions import ValidationError as jsonschemaValidationError
 from schematics.exceptions import ValidationError as schematicsValidationError
 
 
-class Flexible(Model):
+class _Flexible(Model):
     """ Save code, version and props of schema """
 
     _loaded = False
-    _schema_dist = None
+    _schema_source = None
 
     version = StringType()
     code = StringType(max_length=10)
     properties = StringType()
 
-    def __init__(self, schema_source, *args, **kwargs):
-        """ Save schema source """
-        super(Flexible, self).__init__(*args, **kwargs)
-        self._schema_source = schema_source
-
     def validate(self, partial=False, strict=False):
-        """ Get schema and validate """
+        """ Try find schema and validate them """
         if not self._loaded:
             self._load_schemas()
-        schema = self._schema_dist.find(self.code, self.version)
+        schema = self._schema_source.get_schema(self.code, self.version)
         if schema:
             try:
-                Draft4Validator(schema).validate(self.properties)
+                schema[2].validate(json.loads(self.properties))
             except jsonschemaValidationError as error:
                 raise schematicsValidationError(error.message)
-        super(Flexible, self).validate()
+        super(_Flexible, self).validate()
 
     def _load_schemas(self):
         """ Load all schemas from source to dist """
-        self._schema_dist = self._schema_source.load()
+        self._schema_source.load()
         self._loaded = True
+
+
+class Flexible(object):
+
+    def __init__(self, store_handler, schema_path):
+        _Flexible._schema_source = store_handler(schema_path)
+
+    @staticmethod
+    def get_module():
+        return _Flexible
