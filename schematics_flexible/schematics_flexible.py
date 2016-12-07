@@ -17,20 +17,23 @@ class _Flexible(Model):
     code = StringType(max_length=10)
     properties = StringType()
 
-    def validate(self, partial=False, strict=False):
-        """ Try find schema and validate them """
+    def validate(self, *args, **kwargs):
+        """ Try find json schema and validate it with properties """
         if not self._loaded:
             self._load_schemas()
-        schema = self._schema_source.get_schema(self.code, self.version)
-        if schema:
+        schema_tuple = self._schema_source.get_schema(self.code, self.version)
+        if schema_tuple:
             try:
-                schema[2].validate(json.loads(self.properties))
+                schema_tuple.schema.validate(json.loads(self.properties))
             except jsonschemaValidationError as error:
                 raise schematicsValidationError(error.message)
-        super(_Flexible, self).validate()
+            else:
+                self.code = schema_tuple.code
+                self.version = schema_tuple.version
+        super(_Flexible, self).validate(*args, **kwargs)
 
     def _load_schemas(self):
-        """ Load all schemas from source to dist """
+        """ Load schemas """
         self._schema_source.load()
         self._loaded = True
 
