@@ -33,7 +33,7 @@ class _Flexible(Model):
         super(_Flexible, self).validate(*args, **kwargs)
 
     def _load_schemas(self):
-        """ Load schemas """
+        """ Load schemas from _schema_source """
         self._schema_source.load()
         self._loaded = True
 
