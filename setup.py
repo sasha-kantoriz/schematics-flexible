@@ -28,7 +28,8 @@ test_requirements = [
     'coverage == 4.1',
     'Sphinx == 1.4.8',
     'schematics',
-    'jsonschema'
+    'jsonschema',
+    'mock'
 ]
 
 setup(
