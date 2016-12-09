@@ -22,6 +22,7 @@ class _Flexible(Model):
         if not self._loaded:
             self._load_schemas()
         schema_tuple = self._schema_source.get_schema(self.code, self.version)
+        # import pdb; pdb.set_trace()
         if schema_tuple:
             try:
                 schema_tuple.schema.validate(json.loads(self.properties))
