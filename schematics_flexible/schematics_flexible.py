@@ -28,7 +28,7 @@ class _Flexible(Model):
             try:
                 schema_tuple.schema.validate(json.loads(self.properties))
                 pri
-            except self._schema_source.validation_error as error:
+            except self._schema_source.validation_exception as error:
                 raise schematicsValidationError(error.message)
             else:
                 self.code = schema_tuple.code
