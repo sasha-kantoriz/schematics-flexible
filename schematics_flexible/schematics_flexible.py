@@ -20,12 +20,15 @@ class _Flexible(Model):
         """ Try find json schema and validate it with properties """
         if not self._loaded:
             self._load_schemas()
-        schema_tuple = self._schema_source.get_schema(self.code, self.version)
-        # import pdb; pdb.set_trace()
+        try:
+            schema_tuple = self._schema_source.get_schema(self.code, self.version)
+        except self._schema_source.import_exception as error:
+            raise schematicsValidationError(error.message)
         if schema_tuple:
             try:
                 schema_tuple.schema.validate(json.loads(self.properties))
-            except self._schema_source._exceptions as error:
+                pri
+            except self._schema_source.validation_error as error:
                 raise schematicsValidationError(error.message)
             else:
                 self.code = schema_tuple.code
