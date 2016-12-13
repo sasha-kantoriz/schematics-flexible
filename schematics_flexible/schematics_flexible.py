@@ -21,9 +21,11 @@ class _Flexible(Model):
         if not self._loaded:
             self._load_schemas()
         try:
-            schema_tuple = self._schema_source.get_schema(self.code, self.version)
+            schema_tuple = self._schema_source.get_schema(self.code,
+                                                          self.version)
         except self._schema_source.import_exception as error:
             raise schematicsValidationError(error.message)
+        # import pdb; pdb.set_trace()
         if schema_tuple:
             try:
                 schema_tuple.schema.validate(json.loads(self.properties))
