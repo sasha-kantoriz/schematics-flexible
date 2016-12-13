@@ -3,7 +3,6 @@ import json
 
 from schematics.types import StringType
 from schematics.models import Model
-from jsonschema.exceptions import ValidationError as jsonschemaValidationError
 from schematics.exceptions import ValidationError as schematicsValidationError
 
 
@@ -26,7 +25,7 @@ class _Flexible(Model):
         if schema_tuple:
             try:
                 schema_tuple.schema.validate(json.loads(self.properties))
-            except jsonschemaValidationError as error:
+            except self._schema_source.exceptions as error:
                 raise schematicsValidationError(error.message)
             else:
                 self.code = schema_tuple.code
