@@ -28,6 +28,9 @@ help:
 
 clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
 
+build:  ## build virtualenv and install dev dependency
+	@virtualenv venv3 -p python3
+	@venv3/bin/pip install -r requirements_dev.txt
 
 clean-build: ## remove build artifacts
 	rm -fr build/
@@ -51,16 +54,16 @@ lint: ## check style with flake8
 	flake8 schematics_flexible tests
 
 test: ## run tests quickly with the default Python
-	
+
 		python setup.py test
 
 test-all: ## run tests on every Python version with tox
 	tox
 
 coverage: ## check code coverage quickly with the default Python
-	
+
 		coverage run --source schematics_flexible setup.py test
-	
+
 		coverage report -m
 		coverage html
 		$(BROWSER) htmlcov/index.html
