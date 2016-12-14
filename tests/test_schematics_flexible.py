@@ -25,14 +25,14 @@ class ImportException(BaseException):
 
     def __init__(self, message, *args, **kwargs):
         self.message = message
-        super(ImportException, self).__init__(*args, *kwargs)
+        super(ImportException, self).__init__(*args, **kwargs)
 
 
 class ValidationException(BaseException):
 
     def __init__(self, message, *args, **kwargs):
         self.message = message
-        super(ValidationException, self).__init__(*args, *kwargs)
+        super(ValidationException, self).__init__(*args, **kwargs)
 
 
 def raise_schematicsValidationError(*args, **kwargs):
