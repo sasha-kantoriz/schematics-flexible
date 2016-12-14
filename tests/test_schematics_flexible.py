@@ -35,7 +35,7 @@ class ValidationException(BaseException):
         super(ValidationException, self).__init__(*args, **kwargs)
 
 
-def raise_schematicsValidationError(*args, **kwargs):
+def raise_validation_exception(*args, **kwargs):
     raise ValidationException(message="Properties are wrong")
 
 
@@ -43,7 +43,7 @@ def get_schema_side_effect(code, version='latest'):
     true_validation = mock.Mock()
     true_validation.validate.return_value = True
     false_validation = mock.Mock()
-    false_validation.validate.side_effect = raise_schematicsValidationError
+    false_validation.validate.side_effect = raise_validation_exception
     if code == '04':
         return schema_tuple(schema=true_validation, code='04', version='001')
     if code == '06':
