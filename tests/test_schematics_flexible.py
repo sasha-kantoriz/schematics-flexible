@@ -62,13 +62,7 @@ def get_mock():
     return schema_store
 
 
-class TestSchematics_flexible(unittest.TestCase):
-
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
+class TestSchematicsFlexible(unittest.TestCase):
 
     def test_000_validate_by_good_code(self):
         """ Send good code and try validate """
