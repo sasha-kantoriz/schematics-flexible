@@ -9,6 +9,8 @@ from schematics.exceptions import ValidationError as schematicsValidationError
 class _Flexible(Model):
     """ Save code, version and props of schema """
 
+    __slots__ = []
+
     _loaded = False
     _schema_source = None
 
@@ -43,6 +45,8 @@ class _Flexible(Model):
 
 
 class Flexible(object):
+
+    __slots__ = []
 
     def __init__(self, store_handler, schema_path):
         _Flexible._schema_source = store_handler(schema_path)
