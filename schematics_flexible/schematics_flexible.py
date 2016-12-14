@@ -27,7 +27,6 @@ class _Flexible(Model):
                                                           self.version)
         except self._schema_source.import_exception as error:
             raise schematicsValidationError(error.message)
-        # import pdb; pdb.set_trace()
         if schema_tuple:
             try:
                 schema_tuple.schema.validate(json.loads(self.properties))
