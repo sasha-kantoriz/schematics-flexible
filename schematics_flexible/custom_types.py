@@ -20,4 +20,7 @@ class JsonType(BaseType):
         return json.dumps(value)
 
     def to_primitive(self, value):
-        return json.loads(value)
+        if type(value) == dict:
+            return json.loads(value)
+        else:
+            return value
