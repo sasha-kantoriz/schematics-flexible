@@ -4,7 +4,7 @@ from schematics.types import StringType
 from schematics.models import Model
 from schematics.exceptions import ValidationError as schematicsValidationError
 
-from schematics_flexible.types import JsonType
+from .custom_types import JsonType
 
 
 class _Flexible(Model):

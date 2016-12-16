@@ -21,4 +21,3 @@ class JsonType(BaseType):
 
     def to_primitive(self, value):
         return json.loads(value)
-
