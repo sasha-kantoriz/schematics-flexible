@@ -69,7 +69,7 @@ class TestSchematicsFlexible(unittest.TestCase):
         wrap_model = schematics_flexible.Flexible(get_mock(), '')
         Model = wrap_model.get_module()
         m = Model({'code': '04',
-                   'properties': "{\"m\": \"this is text\"}"})
+                   'properties': {"m": "this is text"}})
         self.assertIsNone(m.validate())
 
     def test_001_validate_with_bad_properties(self):
@@ -77,7 +77,7 @@ class TestSchematicsFlexible(unittest.TestCase):
         wrap_model = schematics_flexible.Flexible(get_mock(), '')
         Model = wrap_model.get_module()
         m = Model({'code': '06',
-                   'properties': "{\"a\": \"this is test\"}"})
+                   'properties': {"a": "this is test"}})
         try:
             m.validate()
         except schematicsValidationError:
@@ -91,7 +91,7 @@ class TestSchematicsFlexible(unittest.TestCase):
         wrap_model = schematics_flexible.Flexible(get_mock(), '')
         Model = wrap_model.get_module()
         m = Model({'code': '07',
-                   'properties': "{\"a\": \"this is test\"}"})
+                   'properties': {"a": "this is test"}})
         try:
             m.validate()
         except schematicsValidationError:

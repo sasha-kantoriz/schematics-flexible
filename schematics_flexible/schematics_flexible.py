@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-import json
 
 from schematics.types import StringType
 from schematics.models import Model
 from schematics.exceptions import ValidationError as schematicsValidationError
+
+from .types import JsonType
 
 
 class _Flexible(Model):
@@ -16,7 +17,7 @@ class _Flexible(Model):
 
     version = StringType()
     code = StringType(max_length=10)
-    properties = StringType()
+    properties = JsonType()
 
     def validate(self, *args, **kwargs):
         """ Try find json schema and validate it with properties """
@@ -29,7 +30,7 @@ class _Flexible(Model):
             raise schematicsValidationError(error.message)
         if schema_tuple:
             try:
-                schema_tuple.schema.validate(json.loads(self.properties))
+                schema_tuple.schema.validate(self.properties)
             except self._schema_source.validation_exception as error:
                 raise schematicsValidationError(error.message)
             else:
