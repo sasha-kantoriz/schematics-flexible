@@ -51,41 +51,41 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 
 lint: ## check style with flake8
-	venv3/bin/flake8 schematics_flexible tests
+	flake8 schematics_flexible tests
 
 test: ## run tests quickly with the default Python
 
-		venv3/bin/python setup.py test
+		python setup.py test
 
 test-all: ## run tests on every Python version with tox
-	venv3/bin/tox
+	tox
 
 coverage: ## check code coverage quickly with the default Python
 
-		venv3/bin/coverage run --source schematics_flexible setup.py test
+		coverage run --source schematics_flexible setup.py test
 
-		venv3/bin/coverage report -m
-		venv3/bin/coverage html
+		coverage report -m
+		coverage html
 		$(BROWSER) htmlcov/index.html
 
 docs: ## generate Sphinx HTML documentation, including API docs
 	rm -f docs/schematics_flexible.rst
 	rm -f docs/modules.rst
-	venv3/bin/sphinx-apidoc -o docs/ schematics_flexible
+	sphinx-apidoc -o docs/ schematics_flexible
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	$(BROWSER) docs/_build/html/index.html
 
 servedocs: docs ## compile the docs watching for changes
-	venv3/bin/watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
+	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
 
 release: clean ## package and upload a release
-	venv3/bin/python setup.py sdist upload
-	venv3/bin/python setup.py bdist_wheel upload
+	python setup.py sdist upload
+	python setup.py bdist_wheel upload
 
 dist: clean ## builds source and wheel package
-	venv3/bin/python setup.py sdist
-	venv3/bin/python setup.py bdist_wheel
+	python setup.py sdist
+	python setup.py bdist_wheel
 	ls -l dist
 
 install: clean ## install the package to the active Python's site-packages
