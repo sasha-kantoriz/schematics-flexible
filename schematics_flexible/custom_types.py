@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
-
-# Fix Python 2.x.
-try:
-    UNICODE_EXISTS = bool(type(unicode))
-except NameError:
-    unicode = lambda s: str(s)
+import sys
 
 from schematics.types import BaseType
 from schematics.exceptions import ValidationError
@@ -23,7 +18,8 @@ class JsonType(BaseType):
             raise ValidationError(error.args[0])
 
     def to_native(self, value, context=None):
-        if isinstance(value, str) or isinstance(value, unicode):
+        if isinstance(value, str) or \
+                sys.version_info[0] == 2 and isinstance(value, unicode):
             return value
         else:
             return json.dumps(value)
