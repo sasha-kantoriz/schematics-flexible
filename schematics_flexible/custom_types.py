@@ -25,7 +25,7 @@ class JsonType(BaseType):
             return json.dumps(value)
 
     def to_primitive(self, value, context=None):
-        if isinstance(value, dict):
+        if not isinstance(value, dict):
             return json.loads(value)
         else:
             return value
