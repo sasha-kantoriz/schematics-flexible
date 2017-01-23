@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import json
 
 from schematics.types import StringType
 from schematics.types.compound import DictType, BaseType
@@ -31,7 +30,7 @@ class _Flexible(Model):
             raise schematicsValidationError(error.message)
         if schema_tuple:
             try:
-                schema_tuple.schema.validate(json.loads(self.properties))
+                schema_tuple.schema.validate(self.properties)
             except self._schema_source.validation_exception as error:
                 raise schematicsValidationError(error.message)
             else:
