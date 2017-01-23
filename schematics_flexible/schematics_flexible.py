@@ -2,10 +2,10 @@
 import json
 
 from schematics.types import StringType
+from schematics.types.compound import DictType, BaseType
 from schematics.models import Model
 from schematics.exceptions import ValidationError as schematicsValidationError
 
-from .custom_types import JsonType
 
 
 class _Flexible(Model):
@@ -18,7 +18,7 @@ class _Flexible(Model):
 
     version = StringType()
     code = StringType(max_length=10)
-    properties = JsonType()
+    properties = DictType(BaseType, default=dict)
 
     def validate(self, *args, **kwargs):
         """ Try find json schema and validate it with properties """
@@ -55,3 +55,6 @@ class Flexible(object):
     @staticmethod
     def get_module():
         return _Flexible
+
+
+from schematics.types.compound import DictType
