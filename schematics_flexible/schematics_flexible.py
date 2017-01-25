@@ -18,7 +18,7 @@ class Flexible(Model):
     code = StringType(max_length=10)
     properties = DictType(BaseType, default=dict)
 
-    def __init__(self, *args, store_handler=None, **kwargs):
+    def __init__(self, store_handler=None, *args, **kwargs):
         super(Flexible, self).__init__(*args, **kwargs)
         if store_handler:
             self._schema_source = store_handler
