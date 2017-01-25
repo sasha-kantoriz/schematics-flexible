@@ -6,8 +6,7 @@ from schematics.models import Model
 from schematics.exceptions import ValidationError as schematicsValidationError
 
 
-
-class _Flexible(Model):
+class Flexible(Model):
     """ Save code, version and props of schema """
 
     __slots__ = []
@@ -18,6 +17,11 @@ class _Flexible(Model):
     version = StringType()
     code = StringType(max_length=10)
     properties = DictType(BaseType, default=dict)
+
+    def __init__(self, *args, store_handler=None, **kwargs):
+        super(Flexible, self).__init__(*args, **kwargs)
+        if store_handler:
+            self._schema_source = store_handler
 
     def validate(self, *args, **kwargs):
         """ Try find json schema and validate it with properties """
@@ -36,24 +40,10 @@ class _Flexible(Model):
             else:
                 self.code = schema_tuple.code
                 self.version = schema_tuple.version
-        super(_Flexible, self).validate(*args, **kwargs)
+        super(Flexible, self).validate(*args, **kwargs)
 
     def _load_schemas(self):
         """ Load schemas from _schema_source """
         self._schema_source.load()
         self._loaded = True
 
-
-class Flexible(object):
-
-    __slots__ = []
-
-    def __init__(self, store_handler, schema_path):
-        _Flexible._schema_source = store_handler(schema_path)
-
-    @staticmethod
-    def get_module():
-        return _Flexible
-
-
-from schematics.types.compound import DictType

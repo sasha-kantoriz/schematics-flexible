@@ -57,27 +57,25 @@ def get_mock():
     m.get_schema = get_schema_side_effect
     m.validation_exception = (ValidationException,)
     m.import_exception = (ImportException,)
-    schema_store = mock.Mock()
-    schema_store.return_value = m
-    return schema_store
+    return m
 
 
 class TestSchematicsFlexible(unittest.TestCase):
 
     def test_000_validate_by_good_code(self):
         """ Send good code and try validate """
-        wrap_model = schematics_flexible.Flexible(get_mock(), '')
-        Model = wrap_model.get_module()
-        m = Model({'code': '04',
-                   'properties': {"m": "this is text"}})
+        m = schematics_flexible.Flexible(
+            {'code': '04',
+             'properties': {"m": "this is text"}},
+            store_handler=get_mock())
         self.assertIsNone(m.validate())
 
     def test_001_validate_with_bad_properties(self):
         """ Send bad code and try validate """
-        wrap_model = schematics_flexible.Flexible(get_mock(), '')
-        Model = wrap_model.get_module()
-        m = Model({'code': '06',
-                   'properties': {"a": "this is test"}})
+        m = schematics_flexible.Flexible(
+            {'code': '06',
+             'properties': {"a": "this is test"}},
+            store_handler=get_mock())
         try:
             m.validate()
         except schematicsValidationError:
@@ -88,10 +86,10 @@ class TestSchematicsFlexible(unittest.TestCase):
 
     def test_002_import_exception(self):
         """ Try import not real schema """
-        wrap_model = schematics_flexible.Flexible(get_mock(), '')
-        Model = wrap_model.get_module()
-        m = Model({'code': '07',
-                   'properties': {"a": "this is test"}})
+        m = schematics_flexible.Flexible(
+            {'code': '07',
+             'properties': {"a": "this is test"}},
+            store_handler=get_mock())
         try:
             m.validate()
         except schematicsValidationError:
