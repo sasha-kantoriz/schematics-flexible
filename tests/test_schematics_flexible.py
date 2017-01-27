@@ -64,7 +64,7 @@ class TestSchematicsFlexible(unittest.TestCase):
 
     def test_000_validate_by_good_code(self):
         """ Send good code and try validate """
-        m = schematics_flexible.Flexible(
+        m = schematics_flexible.BaseFlexible(
             {'code': '04',
              'properties': {"m": "this is text"}},
             store_handler=get_mock())
@@ -72,7 +72,7 @@ class TestSchematicsFlexible(unittest.TestCase):
 
     def test_001_validate_with_bad_properties(self):
         """ Send bad code and try validate """
-        m = schematics_flexible.Flexible(
+        m = schematics_flexible.BaseFlexible(
             {'code': '06',
              'properties': {"a": "this is test"}},
             store_handler=get_mock())
@@ -86,7 +86,7 @@ class TestSchematicsFlexible(unittest.TestCase):
 
     def test_002_import_exception(self):
         """ Try import not real schema """
-        m = schematics_flexible.Flexible(
+        m = schematics_flexible.BaseFlexible(
             {'code': '07',
              'properties': {"a": "this is test"}},
             store_handler=get_mock())

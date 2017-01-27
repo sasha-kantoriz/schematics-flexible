@@ -2,11 +2,11 @@
 
 from schematics.types import StringType
 from schematics.types.compound import DictType, BaseType
-from schematics.models import Model
+from schematics.models import Model, ModelType
 from schematics.exceptions import ValidationError as schematicsValidationError
 
 
-class Flexible(Model):
+class BaseFlexible(Model):
     """ Save code, version and props of schema """
 
     __slots__ = []
@@ -20,7 +20,7 @@ class Flexible(Model):
 
     def __init__(self, raw_data=None, deserialize_mapping=None,
                  strict=True, store_handler=None):
-        super(Flexible, self).__init__(
+        super(BaseFlexible, self).__init__(
             raw_data, deserialize_mapping, strict)
         if store_handler:
             self._schema_source = store_handler
@@ -42,10 +42,19 @@ class Flexible(Model):
             else:
                 self.code = schema_tuple.code
                 self.version = schema_tuple.version
-        super(Flexible, self).validate(*args, **kwargs)
+        super(BaseFlexible, self).validate(*args, **kwargs)
 
     def _load_schemas(self):
         """ Load schemas from _schema_source """
         self._schema_source.load()
         self._loaded = True
 
+
+class FlexibleModelType(ModelType):
+
+    def __init__(self, schema_source, **kwargs):
+        class Flexible(BaseFlexible):
+            """ model for storing flexible fields  """
+            _schema_source = schema_source
+
+        super(FlexibleModelType, self).__init__(model_class=Flexible, **kwargs)
