@@ -10,19 +10,11 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
-    'pip>=6.0.7',
-    'bumpversion==0.5.3',
-    'wheel==0.29.0',
-    'watchdog==0.8.3',
     'schematics',
     'jsonschema'
 ]
 
 test_requirements = [
-    'pip>=6.0.7',
-    'bumpversion==0.5.3',
-    'wheel==0.29.0',
-    'watchdog==0.8.3',
     'flake8==2.6.0',
     'tox == 2.3.1',
     'coverage == 4.1',
