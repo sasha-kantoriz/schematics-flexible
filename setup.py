@@ -19,7 +19,7 @@ test_requirements = [
     'tox == 2.3.1',
     'coverage == 4.1',
     'Sphinx == 1.4.8',
-    'schematics',
+    'schematics == 1.1.1',
     'jsonschema',
     'mock'
 ]
