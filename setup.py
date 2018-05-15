@@ -55,6 +55,7 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
     ],
+    extras_require={'test': test_requirements},
     test_suite='tests',
     tests_require=test_requirements
 )
