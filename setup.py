@@ -15,11 +15,11 @@ requirements = [
 ]
 
 test_requirements = [
-    'flake8==2.6.0',
-    'tox == 2.3.1',
-    'coverage >= 4.0.3',
-    'Sphinx == 1.4.8',
-    'schematics == 1.1.1',
+    'flake8',
+    'tox',
+    'coverage',
+    'Sphinx',
+    'schematics',
     'jsonschema',
     'mock'
 ]
